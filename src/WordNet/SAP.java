@@ -73,58 +73,84 @@ public class SAP {
     }
 
 
-/*
+
     // length of shortest ancestral path between any vertex in v and any vertex in w; -1 if no such path
     public int length(Iterable<Integer> v, Iterable<Integer> w){
+        int shortest = -1;
+        int dist;
+        for(Integer i : v){
+            for(Integer j : w){
+                dist = length(i,j);
+                if(dist != -1 && shortest < dist) shortest = dist;
+
+            }
+
+        }
+        return shortest;
+
+
 
     }
 
     // a common ancestor that participates in shortest ancestral path; -1 if no such path
     public int ancestor(Iterable<Integer> v, Iterable<Integer> w){
+        int shortest = -1;
+        int ancestor = -1;
+        int dist;
+        for(Integer i : v){
+            for(Integer j : w){
+                dist = length(i,j);
+                if(dist != -1 && shortest < dist){
+                    shortest = dist;
+                    ancestor = ancestor(i, j);
+                }
+
+            }
+
+        }
+        return ancestor;
 
     }
-*/
+
 
     // do unit testing of this class
     public static void main(String[] args){
 
-        Digraph gAcyclic = new Digraph(6);
-        gAcyclic.addEdge(0, 1);
-        gAcyclic.addEdge(1,2);
-        gAcyclic.addEdge(0,4);
-        gAcyclic.addEdge(4, 5);
+        Digraph gAcyclic, gCyclic;
+        In in = new In("/digraph1.txt");
 
-        Digraph gCyclic = new Digraph(3);
-        gCyclic.addEdge(0, 1);
-        gCyclic.addEdge(1,2);
-        gCyclic.addEdge(2, 0);
+        String input[];
+        gAcyclic = new Digraph(in);
+
+
+
         SAP sapA = new SAP(gAcyclic);
-        SAP sapC = new SAP(gCyclic);
+
 
         //test is not cyclic
         System.out.print("Test graph is DAG, should be true: ");
         System.out.println(sapA.isDAG());
 
         //test is cyclic
-        System.out.print("Test graph is cyclic, should be false: ");
-        System.out.println(sapC.isDAG());
+        //System.out.print("Test graph is cyclic, should be false: ");
+        //System.out.println(sapC.isDAG());
 
         //test is rooted
         System.out.print("Test graph is rooted, should be true: ");
         System.out.println(sapA.isRootedDAG());
 
         //test is not rooted
-        System.out.print("Test graph is not rooted, should be false: ");
-        System.out.println(sapC.isRootedDAG());
+       // System.out.print("Test graph is not rooted, should be false: ");
+        //System.out.println(sapC.isRootedDAG());
 
         //test has ancestor and length
-        System.out.print("Test two known vertices have ancestor and length, should be \nAncestor: 0\nLength: 5\n\n");
-        System.out.println("Ancestor: " + sapA.ancestor(1, 4));
-        System.out.println("Length: " + sapA.length(1, 4));
+        System.out.print("Test two known vertices have ancestor and length, should be \nAncestor: 0\nLength: 3\n\n");
+        System.out.println("Ancestor: " + sapA.ancestor(2, 4));
+        System.out.println("Length: " + sapA.length(2, 4));
 
         System.out.println("Test does not have ancestor or length, should be \nAncestor: -1\nLength: -1\n");
-        System.out.println("Ancestor: " + sapA.ancestor(3, 5));
-        System.out.println("Length: " + sapA.length(3, 5));
+        System.out.println("Ancestor: " + sapA.ancestor(4, 7));
+        System.out.println("Length: " + sapA.length(4, 7));
 
     }
 }
