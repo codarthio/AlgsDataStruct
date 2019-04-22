@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AlgsDataStruct.iml" filepath="$PROJECT_DIR$/AlgsDataStruct.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ProgrammingAssignment4/ProgrammingAssignment4.iml" filepath="$PROJECT_DIR$/ProgrammingAssignment4/ProgrammingAssignment4.iml" />
     </modules>
   </component>
 </project>
